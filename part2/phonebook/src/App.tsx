@@ -58,6 +58,7 @@ const App = () => {
           setNotification(undefined)
         }, 5000)
       })
+      .catch(error => setNotification({ message: error.response.data.error, status: 'error'}))
     }
     setNewName("");
     setNewNumber("");
