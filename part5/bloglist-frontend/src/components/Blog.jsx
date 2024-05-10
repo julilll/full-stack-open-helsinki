@@ -38,7 +38,7 @@ const Blog = ({ blog, handleRemove }) => {
     if (loggedUserJSON) {
       user = JSON.parse(loggedUserJSON)
     }
-    return user.name === blog?.user?.name
+    return user?.name === blog?.user?.name
   }
 
   return (
@@ -51,8 +51,8 @@ const Blog = ({ blog, handleRemove }) => {
       </div>
       {showDetails && (
         <div>
-          <a href={blog.url}>{blog.url}</a>
-          <p>
+          <a href={blog.url} className='blog-url'>{blog.url}</a>
+          <p  className='blog-likes'>
             likes {likes}{' '}
             <button onClick={addLike} disabled={likesBtnDisabled}>
               like

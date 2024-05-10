@@ -31,6 +31,7 @@ const NewBlogForm = forwardRef(({ handleNewPost }, refs) => {
           type="text"
           value={title}
           name="Title"
+          placeholder='write blog title here'
           onChange={({ target }) => setTitle(target.value)}
         />
       </div>
