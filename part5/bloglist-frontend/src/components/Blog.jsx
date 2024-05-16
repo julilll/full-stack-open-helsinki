@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, handleRemove }) => {
+const Blog = ({ blog, handleRemove, handleLikesUpdate }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
   const [likesBtnDisabled, setlikesBtnDisabled] = useState(false)
@@ -28,6 +28,9 @@ const Blog = ({ blog, handleRemove }) => {
       .then(() => {
         setLikes(updatedLikes)
         setlikesBtnDisabled(false)
+        updatedPost.id = blog.id
+        updatedPost.user = blog.user
+        handleLikesUpdate(updatedPost)
       })
       .catch((err) => console.log(err))
   }
@@ -42,7 +45,7 @@ const Blog = ({ blog, handleRemove }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} data-testid="blog">
       <div>
         {blog.title} {blog.author}
         <button onClick={() => setShowDetails(!showDetails)}>
@@ -52,7 +55,7 @@ const Blog = ({ blog, handleRemove }) => {
       {showDetails && (
         <div>
           <a href={blog.url} className='blog-url'>{blog.url}</a>
-          <p  className='blog-likes'>
+          <p  className='blog-likes' data-testid={blog.title}>
             likes {likes}{' '}
             <button onClick={addLike} disabled={likesBtnDisabled}>
               like

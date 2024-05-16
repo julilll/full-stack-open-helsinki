@@ -28,6 +28,7 @@ const NewBlogForm = forwardRef(({ handleNewPost }, refs) => {
       <div>
         title:
         <input
+          data-testid='title'
           type="text"
           value={title}
           name="Title"
@@ -38,6 +39,7 @@ const NewBlogForm = forwardRef(({ handleNewPost }, refs) => {
       <div>
         author:
         <input
+          data-testid='author'
           type="text"
           value={author}
           name="Author"
@@ -47,6 +49,7 @@ const NewBlogForm = forwardRef(({ handleNewPost }, refs) => {
       <div>
         url:
         <input
+          data-testid='url'
           type="text"
           value={url}
           name="Url"

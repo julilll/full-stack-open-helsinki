@@ -63,7 +63,15 @@ const App = () => {
     blogService
       .create(newPost)
       .then(res => {
-        setBlogs(blogs.concat(res))
+        const newBlogAdded = {
+          ...res,
+          user: {
+            id: user.id,
+            name: user.name,
+            username: user.username
+          }
+        }
+        setBlogs(blogs.concat(newBlogAdded))
         setNotification({ message: `New post was added by ${newPost.author}`, status: 'success' })
         setTimeout(() => {
           setNotification(undefined)
@@ -72,6 +80,7 @@ const App = () => {
         newBlogFormRefFields?.current?.clearForm()
       })
       .catch((er) => {
+        console.log(er?.response)
         setNotification({ message: `Post is not added because of error: ${er?.response?.data?.error}`, status: 'error' })
         setTimeout(() => {
           setNotification(undefined)
@@ -93,6 +102,7 @@ const App = () => {
       <div>
         username
         <input
+          data-testid='username'
           type="text"
           value={username}
           name="Username"
@@ -102,6 +112,7 @@ const App = () => {
       <div>
         password
         <input
+          data-testid='password'
           type="password"
           value={password}
           name="Password"
@@ -144,7 +155,7 @@ const App = () => {
       </p>
       {newBlogForm()}
       {blogs.sort((a, b) => b.likes - a.likes).map((blog) => (
-        <Blog key={blog.id} blog={blog} handleRemove={removeBlog}/>
+        <Blog key={blog.id} blog={blog} handleRemove={removeBlog} handleLikesUpdate={newBlog => setBlogs(blogs.map(el => el.id === newBlog.id ? newBlog : el))}/>
       ))}
     </div>
   )
